@@ -1,12 +1,12 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import { UserManager } from './UserManager';
-import { Counter } from './features/counter/Counter';
+import { UserManager } from './features/user/UserManager';
+import Counter from './features/counter/Counter';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -19,9 +19,11 @@ function App() {
         >
           Learn React
         </a>
-        <UserManager />
         <Counter />
-      </header>
+      </header> */}
+      
+        <h1 id='header_title'>用户管理中心</h1>
+      <UserManager />
     </div>
   );
 }
