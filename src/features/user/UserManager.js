@@ -1,6 +1,6 @@
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Typography, Button } from 'antd';
 import React, { useState } from 'react';
-import { addUser, saveUser, removeUser, setEditingKey, searchUser, clearSearch } from './userSlice'
+import { addUser, saveUser, removeUser, setEditingKey, searchUser, clearSearch, editUser } from './userSlice'
 import store from '../../app/store';
 import '../../css/EditableTable.css'
 
@@ -16,7 +16,21 @@ const EditableCell = ({
     children,
     ...restProps
   }) => {
-    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+    // const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+    let inputNode = null;
+    switch(inputType) {
+      case 'number': {
+        inputNode = <InputNumber />
+        break;
+      }
+      case 'hidden': {
+        inputNode = <Input.Password />
+        break;
+      }
+      default: {
+        inputNode = <Input />
+      }
+    }
     return (
       <td {...restProps}>
         {editing ? (
@@ -72,7 +86,8 @@ const EditableCell = ({
           dataIndex: 'password',
           width: '25%',
           key: 'password',
-          editable: true
+          editable: true,
+          inputType: 'hidden'
       },
       {
         title: '编辑',
@@ -266,12 +281,23 @@ export class UserManager extends React.Component {
         return (
             <div>
                 <div>
-                    <Search width="60%" placeholder="用户名" onSearch={this.onSearch} enterButton />
+                    <span style={{width:'60%'}}>
+                      <Search style={{width:'60%'}} placeholder="用户名" onSearch={this.onSearch} enterButton />
+                    </span>
                     {/* <input value={searchValue} defaultValue="用户名" placeholder="用户名"/> */}
-                    <button onClick={() => {store.dispatch(clearSearch())}}>清空检索</button>
+                    &nbsp;
+                    <span style={{width:'30%'}}>
+                      {/* <button onClick={() => {store.dispatch(clearSearch())}}>清空检索</button> */}
+                      <Button
+                        onClick={() => {store.dispatch(clearSearch())}} 
+                        type="primary"
+                      >
+                        清空检索
+                      </Button>
+                    </span>
                 </div>
-                <div>
-                    <button onClick={() => store.dispatch(addUser({username:"username",password: "password"}))}>添加用户</button>
+                <div style={{textAlign: 'left'}}>
+                    <Button type='primary' onClick={() => store.dispatch(addUser({username:"username",password: "password"}))}>添加用户</Button>
                 </div>
                 <EditableTable data={searchUsers === null ? users: searchUsers} columns={columns} />
             </div>

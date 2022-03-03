@@ -1,6 +1,7 @@
 {
   "name": "user_manager",
   "version": "0.1.0",
+  "description": "使用@reduxjs/toolkit完成计数器和用户管理的功能",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.2",
